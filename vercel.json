@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/gameradar",
+      "destination": "https://gameradar-wine.vercel.app/"
+    },
+    {
+      "source": "/gameradar/:path*",
+      "destination": "https://gameradar-wine.vercel.app/:path*"
+    },
+    {
       "source": "/statpitch",
       "destination": "https://statpitch-frontend.vercel.app/"
     },
