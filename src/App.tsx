@@ -7,6 +7,8 @@ import { motion } from 'framer-motion'
 import HomePage from './pages/HomePage'
 import CoursesPage from './pages/CoursesPage'
 import ProjectsPage from './pages/ProjectsPage'
+import ErrorPage from './pages/ErrorPage'
+import NotFoundPage from './pages/NotFoundPage'
 import Layout from './Layout'
 
 const queryClient = new QueryClient()
@@ -15,10 +17,12 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       { path: 'courses', element: <CoursesPage /> },
       { path: 'projects', element: <ProjectsPage /> },
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ])

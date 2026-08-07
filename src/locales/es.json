@@ -30,7 +30,7 @@
     "subtitle": "Una selección de mis proyectos principales, donde empiezo a llevar todo lo aprendido en mis certificaciones a la práctica y a la realidad.",
     "all-projects": "Ver todos los proyectos"
   },
-  "certifications":{
+  "certifications": {
     "title": "Certificaciones",
     "subtitle": "Formación y cursos validados que respaldan mis conocimientos y mi capacidad técnica.",
     "all-courses": "Ver todos"
@@ -79,5 +79,10 @@
     "clean_filter": "Limpiar filtros",
     "search": "Buscar proyectos",
     "back": "Volver"
+  },
+  "not-found": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o fue movida.",
+    "back": "Volver al inicio"
   }
 }

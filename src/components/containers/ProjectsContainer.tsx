@@ -39,7 +39,6 @@ function ProjectsContainer({
     <>
       {projects.map((project) => {
         const translation = getTranslation(project.translations, locale)
-        console.log(project)
         return (
           <motion.div
             initial={{ opacity: 0, y: 50 }}
