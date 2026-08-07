@@ -55,6 +55,7 @@ const Navbar = () => {
           href={'https://assets.gabrielmayorga.dev/portfolio/curriculum.pdf'}
           download={'Gabriel-Mayorga-CV'}
           target={'_blank'}
+          rel={'noopener noreferrer'}
           className={
             'flex h-10 w-auto cursor-pointer items-center justify-center rounded-lg bg-primary/10 px-4 outline-1 hover:bg-primary/20'
           }

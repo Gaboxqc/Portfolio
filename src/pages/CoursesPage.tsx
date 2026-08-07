@@ -31,7 +31,7 @@ const CoursesPage = () => {
   }
 
   return (
-    <main className='container mx-auto mb-30 flex flex-col gap-8 px-4 pt-24'>
+    <div className='container mx-auto mb-30 flex flex-col gap-8 px-4 pt-24'>
       <PageHeader
         backLabel={translate('course-section.back')}
         title={translate('course-section.title')}
@@ -82,7 +82,7 @@ const CoursesPage = () => {
           <CoursesContainer courses={courses} loading={loading} error={error} />
         </div>
       </section>
-    </main>
+    </div>
   )
 }
 

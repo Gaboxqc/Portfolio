@@ -45,13 +45,29 @@ const ProjectCard = ({
             'absolute right-4 top-4 flex gap-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-500'
           }
         >
-          <a href={gitUrl} target={'_blank'} className={'bg-card p-2 rounded-xl'}>
-            <GithubIcon className={'text-foreground'} />
-          </a>
+          {gitUrl && (
+            <a
+              href={gitUrl}
+              target={'_blank'}
+              rel={'noopener noreferrer'}
+              aria-label={`${title} — source code`}
+              className={'bg-card p-2 rounded-xl'}
+            >
+              <GithubIcon className={'text-foreground'} />
+            </a>
+          )}
 
-          <a href={projectUrl} target={'_blank'} className={'bg-card p-2 rounded-xl'}>
-            <LinkIcon className={'text-foreground'} />
-          </a>
+          {projectUrl && (
+            <a
+              href={projectUrl}
+              target={'_blank'}
+              rel={'noopener noreferrer'}
+              aria-label={`${title} — live site`}
+              className={'bg-card p-2 rounded-xl'}
+            >
+              <LinkIcon className={'text-foreground'} />
+            </a>
+          )}
         </div>
         <img src={image} alt={title} className={'h-full w-full object-cover'} />
       </div>

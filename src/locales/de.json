@@ -79,5 +79,10 @@
     "clean_filter": "Filter löschen",
     "search": "Projekte suchen",
     "back": "Zurück"
+  },
+  "not-found": {
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "back": "Zurück zur Startseite"
   }
 }

@@ -3,14 +3,15 @@ import { getCertifications } from '../services/certifications'
 import type { Certification } from '../types'
 
 interface UseCertificationsParams {
+  isMain?: boolean
   offset?: number
   limit?: number
 }
 
-const useCertifications = ({ offset = 0, limit = 100 }: UseCertificationsParams = {}) => {
+const useCertifications = ({ isMain, offset = 0, limit = 100 }: UseCertificationsParams = {}) => {
   const { data, isLoading, error } = useQuery<Certification[], Error>({
-    queryKey: ['certifications', offset, limit],
-    queryFn: ({ signal }) => getCertifications({ offset, limit }, signal),
+    queryKey: ['certifications', isMain, offset, limit],
+    queryFn: ({ signal }) => getCertifications({ isMain, offset, limit }, signal),
     retry: 2,
   })
 

@@ -43,7 +43,7 @@ const ProjectsPage = () => {
   }
 
   return (
-    <main className='container mx-auto mb-30 flex flex-col gap-8 px-4 pt-24'>
+    <div className='container mx-auto mb-30 flex flex-col gap-8 px-4 pt-24'>
       <PageHeader
         backLabel={translate('course-section.back')}
         title={translate('project-section.title')}
@@ -96,7 +96,7 @@ const ProjectsPage = () => {
       <section className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
         <ProjectsContainer projects={projects} loading={loading} error={error} />
       </section>
-    </main>
+    </div>
   )
 }
 

@@ -10,13 +10,9 @@ interface CertificationsContainerProps {
   animation?: string
 }
 
-function CertificationsContainer({
-  limit = 10,
-  isMain = false,
-  animation,
-}: CertificationsContainerProps) {
+function CertificationsContainer({ limit = 10, isMain, animation }: CertificationsContainerProps) {
   const { locale } = useLanguage()
-  const { certifications, loading, error } = useCertifications({ limit })
+  const { certifications, loading, error } = useCertifications({ isMain, limit })
 
   if (loading)
     return (

@@ -1,63 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-@import "./theme.css";
-@import "tailwindcss";
+@import './theme.css';
+@import 'tailwindcss';
 
 @theme {
-    --font-sans: 'Rubik', sans-serif;
+  --font-sans: 'Rubik', sans-serif;
 }
 
 @layer base {
-    * {
-        @apply border-border outline-primary/50;
-    }
+  * {
+    @apply border-border outline-primary/50;
+  }
 
-    body {
-        @apply bg-background text-foreground;
-    }
+  body {
+    @apply bg-background text-foreground;
+  }
 
-    h1 {
-        font-size: var(--text-4xl);
-        font-weight: var(--font-weight-medium);
-        line-height: 1.5;
-    }
+  h1 {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
 
-    h2 {
-        font-size: var(--text-xl);
-        font-weight: var(--font-weight-medium);
-        line-height: 1.5;
-    }
+  h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
 
-    h3 {
-        font-size: var(--text-lg);
-        font-weight: var(--font-weight-medium);
-        line-height: 1.5;
-    }
+  h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
 
-    h4 {
-        font-size: var(--text-base);
-        font-weight: var(--font-weight-medium);
-        line-height: 1.5;
-    }
+  h4 {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
 
-    label {
-        font-size: var(--text-base);
-        font-weight: var(--font-weight-medium);
-        line-height: 1.5;
-    }
+  label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
 
-    li {
-        cursor: pointer;
-    }
+  li {
+    cursor: pointer;
+  }
 
-    button {
-        font-size: var(--text-base);
-        font-weight: var(--font-weight-medium);
-        line-height: 1.5;
-    }
+  button {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
 
-    input {
-        font-size: var(--text-base);
-        font-weight: var(--font-weight-normal);
-        line-height: 1.5;
-    }
+  input {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
 }
