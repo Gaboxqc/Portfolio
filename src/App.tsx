@@ -15,6 +15,13 @@ const CoursesPage = lazy(() => import('./pages/CoursesPage'))
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
+// The whole dashboard is lazy, so a public visitor downloads none of it.
+const AdminRoot = lazy(() => import('./pages/admin/AdminRoot'))
+const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'))
+const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'))
+const AdminOverviewPage = lazy(() => import('./pages/admin/AdminOverviewPage'))
+const RequireAdmin = lazy(() => import('./components/admin/RequireAdmin'))
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -38,6 +45,25 @@ const router = createBrowserRouter([
       { path: 'courses', element: <CoursesPage /> },
       { path: 'projects', element: <ProjectsPage /> },
       { path: '*', element: <NotFoundPage /> },
+    ],
+  },
+  // A sibling of '/' rather than a child, so the dashboard skips the public
+  // navbar and footer entirely and is matched ahead of the '*' catch-all above.
+  {
+    path: '/admin',
+    element: <AdminRoot />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: 'login', element: <AdminLoginPage /> },
+      {
+        element: <RequireAdmin />,
+        children: [
+          {
+            element: <AdminLayout />,
+            children: [{ index: true, element: <AdminOverviewPage /> }],
+          },
+        ],
+      },
     ],
   },
 ])

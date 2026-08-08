@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+# The dashboard has nothing to index, and crawling it only burns budget.
+# Pages also send a noindex tag, which is what keeps them out of results if
+# something ever links to them.
+Disallow: /admin
+
 Sitemap: https://gabrielmayorga.dev/sitemap.xml
