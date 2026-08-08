@@ -20,8 +20,11 @@ const ProjectsPage = () => {
     path: '/projects',
   })
 
-  const { options: projectTypes } = useFilters('project_types')
-  const { options: difficultyLevels } = useFilters('difficulty_levels')
+  // Hyphenated to match the API's route prefixes; the underscore spellings
+  // 404ed, and FilterGroup renders nothing when empty, so both filters were
+  // silently absent from the page.
+  const { options: projectTypes } = useFilters('project-types')
+  const { options: difficultyLevels } = useFilters('difficulty-levels')
   const { options: tags } = useFilters('tags')
 
   const [search, setSearch] = useState('')
