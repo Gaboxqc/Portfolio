@@ -87,6 +87,8 @@ export default function FeaturedProjectsSection() {
                 <img
                   src={projects[activeIndex].image_url}
                   alt={getTranslation(projects[activeIndex].translations, locale).title}
+                  loading='lazy'
+                  decoding='async'
                   className='h-full w-full object-cover object-center transition-all duration-500'
                 />
               )}

@@ -5,4 +5,19 @@ import svgr from 'vite-plugin-svgr'
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), svgr()],
+  build: {
+    rollupOptions: {
+      output: {
+        // Split the large, rarely-changing dependencies into their own chunks so
+        // a content change does not invalidate the whole vendor payload.
+        manualChunks: (id) => {
+          if (!id.includes('node_modules')) return
+          if (/[\\/]framer-motion[\\/]/.test(id)) return 'motion'
+          if (/[\\/]@radix-ui[\\/]/.test(id)) return 'radix'
+          if (/[\\/](@tanstack|axios)[\\/]/.test(id)) return 'query'
+          if (/[\\/](react|react-dom|react-router|scheduler)[\\/]/.test(id)) return 'react'
+        },
+      },
+    },
+  },
 })

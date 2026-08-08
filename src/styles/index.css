@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+/* The Rubik webfont is linked from index.html, not imported here: a CSS
+   @import forces the browser to download this stylesheet before it can even
+   discover the font request, which blocks the first paint. */
 @import './theme.css';
 @import 'tailwindcss';
 
@@ -59,5 +61,56 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+}
+
+/* Ambient background glows.
+   These run for the entire session, so they are plain CSS rather than
+   JS-driven motion values: the compositor can keep them off the main thread,
+   and they stop costing anything when the user prefers reduced motion. */
+@keyframes glow-pulse-a {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.08;
+    transform: scale(0.93);
+  }
+}
+
+@keyframes glow-pulse-b {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(0.93);
+  }
+  50% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+}
+
+/* Base opacity so the glows stay subtle when the animation is disabled. */
+.bg-glow {
+  opacity: 0.2;
+}
+
+.bg-glow-a {
+  animation: glow-pulse-a 2s linear infinite;
+  will-change: opacity, transform;
+}
+
+.bg-glow-b {
+  animation: glow-pulse-b 2s linear infinite;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-glow-a,
+  .bg-glow-b {
+    animation: none;
+    will-change: auto;
   }
 }
