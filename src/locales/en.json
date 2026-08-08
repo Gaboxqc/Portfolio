@@ -3,7 +3,8 @@
     "portfolio": "Portfolio",
     "home": "Home",
     "courses": "Courses",
-    "projects": "Projects"
+    "projects": "Projects",
+    "language": "Language"
   },
   "hero": {
     "available": "Available to new projects",
@@ -79,6 +80,12 @@
     "clean_filter": "Clear filters",
     "search": "Search projects",
     "back": "Back"
+  },
+  "state": {
+    "error": "The data could not be loaded. Please try again later.",
+    "no-projects": "No projects found.",
+    "no-courses": "No courses found.",
+    "no-certifications": "No certifications found."
   },
   "not-found": {
     "title": "Page not found",

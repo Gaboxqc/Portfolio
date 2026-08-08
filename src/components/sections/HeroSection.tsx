@@ -43,13 +43,23 @@ function HeroSection() {
           </Link>
         </div>
         <div className={'flex items-center justify-center gap-5 text-muted-foreground'}>
-          <a href={'https://github.com/Gaboxqc'}>
+          <a
+            href={'https://github.com/Gaboxqc'}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            aria-label={'GitHub'}
+          >
             <GithubIcon className={'h-8 w-8'} />
           </a>
-          <a href={'https://linkedin.com/in/gabriel-mayorga-b36611231'}>
+          <a
+            href={'https://linkedin.com/in/gabriel-mayorga-b36611231'}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            aria-label={'LinkedIn'}
+          >
             <LinkedInIcon className={'h-8 w-8'} />
           </a>
-          <a href={'mailto:gabrielmayorgate@gmail.com'}>
+          <a href={'mailto:gabrielmayorgate@gmail.com'} aria-label={'Email'}>
             <MailIcon className={'h-8 w-8'} />
           </a>
         </div>

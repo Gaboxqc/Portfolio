@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MotionConfig } from 'framer-motion'
 
 import HomePage from './pages/HomePage'
 import ErrorPage from './pages/ErrorPage'
@@ -44,7 +45,12 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      {/* reducedMotion="user" makes every framer-motion transform and layout
+          animation respect the OS "reduce motion" setting. Opacity fades are
+          kept, since they do not cause motion sickness. */}
+      <MotionConfig reducedMotion='user'>
+        <RouterProvider router={router} />
+      </MotionConfig>
 
       <div
         aria-hidden='true'

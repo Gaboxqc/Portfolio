@@ -11,7 +11,7 @@ interface CoursesContainerProps {
 }
 
 function CoursesContainer({ courses = [], loading = false, error = null }: CoursesContainerProps) {
-  const { locale } = useLanguage()
+  const { locale, translate } = useLanguage()
 
   if (loading)
     return (
@@ -22,12 +22,17 @@ function CoursesContainer({ courses = [], loading = false, error = null }: Cours
       </>
     )
 
-  if (error) return <p className='p-10 text-center text-red-500'>Error: {error}</p>
+  if (error)
+    return (
+      <p role='alert' className='col-span-full p-10 text-center text-red-500'>
+        {translate('state.error')}
+      </p>
+    )
 
   if (!courses.length)
     return (
       <p className='col-span-full p-10 text-center text-muted-foreground'>
-        No se encontraron cursos.
+        {translate('state.no-courses')}
       </p>
     )
 

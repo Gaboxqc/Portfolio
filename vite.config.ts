@@ -4,7 +4,14 @@ import tailwindcss from '@tailwindcss/vite'
 import svgr from 'vite-plugin-svgr'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), svgr()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    // Icons are decorative by default, so hide them from assistive tech and
+    // keep them out of the tab order. Any icon that carries meaning on its own
+    // gets an accessible name from its parent link or button instead.
+    svgr({ svgrOptions: { svgProps: { 'aria-hidden': 'true', focusable: 'false' } } }),
+  ],
   build: {
     rollupOptions: {
       output: {

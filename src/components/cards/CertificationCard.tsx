@@ -61,7 +61,13 @@ const CertificationCard = ({
               </li>
             ))}
           </ul>
-          <a className='self-start' href={url} target='_blank' rel='noopener noreferrer'>
+          <a
+            className='self-start'
+            href={url}
+            target='_blank'
+            rel='noopener noreferrer'
+            aria-label={title}
+          >
             <LinkIcon className='text-muted-foreground' />
           </a>
         </div>

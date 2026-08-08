@@ -61,11 +61,14 @@ const ProjectsPage = () => {
         <div className='flex h-12 w-full items-center rounded-xl border bg-background'>
           <SearchIcon className='mr-2 ml-3 h-5 w-5' />
           <input
-            type='text'
+            type='search'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className='w-full p-2 text-muted-foreground outline-0'
             placeholder={translate('project-section.search')}
+            // A placeholder is not an accessible name: it disappears on input
+            // and is not reliably announced.
+            aria-label={translate('project-section.search')}
           />
         </div>
 

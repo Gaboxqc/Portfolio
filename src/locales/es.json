@@ -3,7 +3,8 @@
     "portfolio": "Portafolio",
     "home": "Inicio",
     "courses": "Cursos",
-    "projects": "Proyectos"
+    "projects": "Proyectos",
+    "language": "Idioma"
   },
   "hero": {
     "available": "Disponible para nuevos proyectos",
@@ -38,7 +39,7 @@
   "contact": {
     "title": "Creemos algo excepcional juntos",
     "subtitle": "Estoy disponible para proyectos freelance o integrarme a un equipo a tiempo completo",
-    "location": "Ubicación ",
+    "location": "Ubicación",
     "conversation": "Iniciar conversación"
   },
   "footer": {
@@ -79,6 +80,12 @@
     "clean_filter": "Limpiar filtros",
     "search": "Buscar proyectos",
     "back": "Volver"
+  },
+  "state": {
+    "error": "No se pudieron cargar los datos. Inténtalo de nuevo más tarde.",
+    "no-projects": "No se encontraron proyectos.",
+    "no-courses": "No se encontraron cursos.",
+    "no-certifications": "No se encontraron certificaciones."
   },
   "not-found": {
     "title": "Página no encontrada",
