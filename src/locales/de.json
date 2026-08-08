@@ -3,7 +3,8 @@
     "portfolio": "Portfolio",
     "home": "Startseite",
     "courses": "Kurse",
-    "projects": "Projekte"
+    "projects": "Projekte",
+    "language": "Sprache"
   },
   "hero": {
     "available": "Verfügbar für neue Projekte",
@@ -45,7 +46,7 @@
     "title": "Full-Stack-Entwickler mit dem Fokus auf funktionale digitale Lösungen. Ich verbinde ein solides zertifiziertes Fundament mit dem Einsatz von KI, um Probleme zu lösen und Interfaces zu gestalten.",
     "navigation": "Navigation",
     "about": "Über mich",
-    "course": "Kurse",
+    "courses": "Kurse",
     "projects": "Projekte",
     "contact": "Kontakt",
     "services": "Dienstleistungen",
@@ -79,6 +80,12 @@
     "clean_filter": "Filter löschen",
     "search": "Projekte suchen",
     "back": "Zurück"
+  },
+  "state": {
+    "error": "Die Daten konnten nicht geladen werden. Bitte versuche es später erneut.",
+    "no-projects": "Keine Projekte gefunden.",
+    "no-courses": "Keine Kurse gefunden.",
+    "no-certifications": "Keine Zertifizierungen gefunden."
   },
   "not-found": {
     "title": "Seite nicht gefunden",

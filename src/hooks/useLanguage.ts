@@ -5,7 +5,7 @@ import { LanguageContext, type LanguageContextValue } from '../context/LanguageC
 const useLanguage = (): LanguageContextValue => {
   const context = useContext(LanguageContext)
   if (!context) {
-    throw new Error('useLanguage debe ser usado dentro de un LanguageProvider')
+    throw new Error('useLanguage must be used within a LanguageProvider')
   }
   return context
 }

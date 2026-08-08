@@ -9,12 +9,16 @@ const languages: { code: Locale; name: string; flag: string }[] = [
 ]
 
 const LanguageSelector = () => {
-  const { locale, setLocale } = useLanguage()
+  const { locale, setLocale, translate } = useLanguage()
 
   return (
     <Select.Root value={locale} onValueChange={(value) => setLocale(value as Locale)}>
-      <Select.Trigger className='flex cursor-pointer items-center gap-2 rounded-xl border border-primary/40 bg-card px-4 py-2 hover:bg-primary/20 focus:outline-0 md:px-7'>
+      <Select.Trigger
+        aria-label={translate('navbar.language')}
+        className='flex cursor-pointer items-center gap-2 rounded-xl border border-primary/40 bg-card px-4 py-2 hover:bg-primary/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:px-7'
+      >
         <svg
+          aria-hidden='true'
           className='h-4 w-4 text-muted-foreground'
           fill='none'
           stroke='currentColor'
@@ -35,6 +39,7 @@ const LanguageSelector = () => {
         <Select.Value placeholder={'Español'} />
         <Select.Icon className='ml-1 text-muted-foreground'>
           <svg
+            aria-hidden='true'
             className='h-3 w-3 transition-transform duration-200'
             fill='none'
             stroke='currentColor'
@@ -61,7 +66,9 @@ const LanguageSelector = () => {
                   className='flex cursor-pointer items-center justify-between rounded-xl p-3 px-5 text-muted-foreground transition-colors outline-none hover:bg-primary/20 data-[state=checked]:text-accent'
                 >
                   <div className='flex items-center gap-3'>
-                    <span className='text-base'>{language.flag}</span>
+                    <span aria-hidden='true' className='text-base'>
+                      {language.flag}
+                    </span>
                     <Select.ItemText>{language.name}</Select.ItemText>
                   </div>
                   <Select.ItemIndicator className='ml-4 hidden shrink-0 md:block'>

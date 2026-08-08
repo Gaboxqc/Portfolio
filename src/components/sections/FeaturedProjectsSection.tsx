@@ -48,7 +48,11 @@ export default function FeaturedProjectsSection() {
         </div>
       )}
 
-      {error && <p className='p-10 text-center text-red-500'>Error: {error}</p>}
+      {error && (
+        <p role='alert' className='p-10 text-center text-red-500'>
+          {translate('state.error')}
+        </p>
+      )}
 
       {!loading && !error && (
         <div className='grid w-full max-w-none gap-8 lg:grid-cols-[auto_1fr_2fr] lg:gap-16'>

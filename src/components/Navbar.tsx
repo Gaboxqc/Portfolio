@@ -11,14 +11,31 @@ const Navbar = () => {
   const { translate } = useLanguage()
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    let frame = 0
+
+    // Coalesce scroll events into one state update per frame; the raw event
+    // fires far more often than the pill/inline state can meaningfully change.
+    const handleScroll = () => {
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        setIsScrolled(window.scrollY > 50)
+      })
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
 
   return (
     <nav
-      className={`${isScrolled ? 'grid-cols-1' : 'bg-background/40 grid-cols-2 md:grid-cols-3'} fixed z-20 grid min-h-20 w-screen items-center px-2 transition-all duration-500 ease-in-out md:px-10`}
+      aria-label={translate('navbar.portfolio')}
+      // inset-x-0 rather than w-screen: w-screen ignores the scrollbar width and
+      // pushes the page into horizontal overflow.
+      className={`${isScrolled ? 'grid-cols-1' : 'bg-background/40 grid-cols-2 md:grid-cols-3'} fixed inset-x-0 z-20 grid min-h-20 items-center px-2 transition-all duration-500 ease-in-out md:px-10`}
     >
       <div className={`${isScrolled ? ' hidden ' : 'flex'} items-center`}>
         <LogoIcon className={'h-11 w-11'} />

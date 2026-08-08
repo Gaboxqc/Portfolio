@@ -26,18 +26,25 @@ const Footer = () => {
           <div className={'flex items-center justify-center gap-4'}>
             <a
               href={'https://github.com/Gaboxqc'}
+              target={'_blank'}
+              rel={'noopener noreferrer'}
+              aria-label={'GitHub'}
               className={'cursor-pointer rounded-xl bg-primary/10 p-2 outline-1'}
             >
               <GithubIcon className={'h-8 w-8'} />
             </a>
             <a
               href={'https://linkedin.com/in/gabriel-mayorga-b36611231'}
+              target={'_blank'}
+              rel={'noopener noreferrer'}
+              aria-label={'LinkedIn'}
               className={'cursor-pointer rounded-xl bg-primary/10 p-2 outline-1'}
             >
               <LinkedInIcon className={'h-8 w-8'} />
             </a>
             <a
               href={'mailto:gabrielmayorgate@gmail.com'}
+              aria-label={'Email'}
               className={'cursor-pointer rounded-xl bg-primary/10 p-2 outline-1'}
             >
               <MailIcon className={'h-8 w-8'} />
@@ -72,7 +79,7 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h4 className={'text-lg'}>Contacto</h4>
+            <h4 className={'text-lg'}>{translate('footer.contact')}</h4>
             <ul className={'my-4 flex flex-col gap-4 text-muted-foreground'}>
               <li className={'flex cursor-default items-center gap-2'}>
                 <MailIcon className={'h-8 w-8'} />
@@ -91,7 +98,9 @@ const Footer = () => {
         </div>
       </div>
       <div className={'border-t py-12 text-center text-sm text-muted-foreground'}>
-        <p>© 2026 Gabriel Mayorga. {translate('footer.rights')}</p>
+        <p>
+          © {new Date().getFullYear()} Gabriel Mayorga. {translate('footer.rights')}
+        </p>
         <div className={'mt-4 flex justify-center gap-4'}>
           <p>{translate('footer.privacy')}</p>
           <p>{translate('footer.service')}</p>

@@ -11,7 +11,7 @@ interface CertificationsContainerProps {
 }
 
 function CertificationsContainer({ limit = 10, isMain, animation }: CertificationsContainerProps) {
-  const { locale } = useLanguage()
+  const { locale, translate } = useLanguage()
   const { certifications, loading, error } = useCertifications({ isMain, limit })
 
   if (loading)
@@ -23,12 +23,17 @@ function CertificationsContainer({ limit = 10, isMain, animation }: Certificatio
       </>
     )
 
-  if (error) return <p className='p-10 text-center text-red-500'>Error: {error}</p>
+  if (error)
+    return (
+      <p role='alert' className='col-span-full p-10 text-center text-red-500'>
+        {translate('state.error')}
+      </p>
+    )
 
   if (!certifications.length)
     return (
       <p className='col-span-full p-10 text-center text-muted-foreground'>
-        No se encontraron certificaciones.
+        {translate('state.no-certifications')}
       </p>
     )
 
