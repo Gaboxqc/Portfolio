@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import TextCardTransparent from '../cards/TextCardTransparent'
+import Badge from './Badge'
 import type { FilterOption } from '../../types'
 
 interface FilterGroupProps {
@@ -29,7 +29,7 @@ function FilterGroup({ label, items = [], selected = [], onToggle }: FilterGroup
             onClick={() => onToggle(item.id)}
             className='cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
           >
-            <TextCardTransparent text={item.name} isActive={selected.includes(item.id)} />
+            <Badge variant='filter' text={item.name} isActive={selected.includes(item.id)} />
           </button>
         ))}
       </div>

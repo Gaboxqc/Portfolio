@@ -30,6 +30,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Test
+        run: npm run test
+
       # Also type-checks: the build script runs `tsc -b` before `vite build`.
       - name: Type-check and build
         run: npm run build

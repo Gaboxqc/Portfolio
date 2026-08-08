@@ -9,6 +9,11 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    // No baseUrl: it is deprecated in TS 6, and paths resolve relative to this file.
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,

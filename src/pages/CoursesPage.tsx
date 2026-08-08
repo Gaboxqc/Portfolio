@@ -6,6 +6,7 @@ import ResultsBar from '../components/ui/ResultsBar'
 import useLanguage from '../hooks/useLanguage'
 import useFilters from '../hooks/useFilters'
 import useCourses from '../hooks/useCourses'
+import useCertifications from '../hooks/useCertifications'
 import useToggleArray from '../hooks/useToggleArray'
 import useDocumentMeta from '../hooks/useDocumentMeta'
 import { AnimatePresence } from 'framer-motion'
@@ -29,6 +30,12 @@ const CoursesPage = () => {
     tagIds: selectedTags,
     limit: 100,
   })
+
+  const {
+    certifications: mainCertifications,
+    loading: loadingCertifications,
+    error: certificationsError,
+  } = useCertifications({ isMain: true })
 
   const hasActiveFilters = selectedCategories.length > 0 || selectedTags.length > 0
 
@@ -75,7 +82,12 @@ const CoursesPage = () => {
         <section className='flex flex-col gap-8'>
           <h3 className='text-2xl'>{translate('course-section.main_certification')}</h3>
           <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
-            <CertificationsContainer isMain={true} animation='rise' />
+            <CertificationsContainer
+              certifications={mainCertifications}
+              loading={loadingCertifications}
+              error={certificationsError}
+              isMain
+            />
           </div>
         </section>
       )}

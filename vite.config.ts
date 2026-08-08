@@ -1,9 +1,12 @@
-import { defineConfig } from 'vite'
+// vitest/config re-exports Vite's defineConfig with the `test` field typed.
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import svgr from 'vite-plugin-svgr'
 
 export default defineConfig({
+  // Resolves the `@/*` alias declared in tsconfig.app.json natively.
+  resolve: { tsconfigPaths: true },
   plugins: [
     react(),
     tailwindcss(),
@@ -26,5 +29,11 @@ export default defineConfig({
         },
       },
     },
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
   },
 })

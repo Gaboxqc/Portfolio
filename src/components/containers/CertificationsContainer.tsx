@@ -1,67 +1,46 @@
 import CertificationCard from '../cards/CertificationCard'
+import AsyncCollection from '../ui/AsyncCollection'
 import useLanguage from '../../hooks/useLanguage'
-import useCertifications from '../../hooks/useCertifications'
 import getTranslation from '../../utils/getTranslation'
-import { motion } from 'framer-motion'
+import type { Certification } from '../../types'
 
 interface CertificationsContainerProps {
-  limit?: number
+  certifications?: Certification[]
+  loading?: boolean
+  error?: string | null
+  /** Highlights the cards as featured; the query itself is owned by the page. */
   isMain?: boolean
-  animation?: string
 }
 
-function CertificationsContainer({ limit = 10, isMain, animation }: CertificationsContainerProps) {
-  const { locale, translate } = useLanguage()
-  const { certifications, loading, error } = useCertifications({ isMain, limit })
-
-  if (loading)
-    return (
-      <>
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className='h-40 w-full animate-pulse rounded-xl bg-muted-foreground/10' />
-        ))}
-      </>
-    )
-
-  if (error)
-    return (
-      <p role='alert' className='col-span-full p-10 text-center text-red-500'>
-        {translate('state.error')}
-      </p>
-    )
-
-  if (!certifications.length)
-    return (
-      <p className='col-span-full p-10 text-center text-muted-foreground'>
-        {translate('state.no-certifications')}
-      </p>
-    )
+function CertificationsContainer({
+  certifications = [],
+  loading = false,
+  error = null,
+  isMain = false,
+}: CertificationsContainerProps) {
+  const { locale } = useLanguage()
 
   return (
-    <>
-      {certifications.map((certification) => {
+    <AsyncCollection
+      items={certifications}
+      loading={loading}
+      error={error}
+      emptyKey='state.no-certifications'
+    >
+      {(certification) => {
         const translation = getTranslation(certification.translations, locale)
         return (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring' }}
-            viewport={{ once: true }}
-            key={certification.id}
-          >
-            <CertificationCard
-              title={translation.title}
-              year={certification.year}
-              academy={certification.academy.name}
-              url={certification.url}
-              tags={certification.tags}
-              isMain={isMain}
-              animation={animation}
-            />
-          </motion.div>
+          <CertificationCard
+            title={translation.title}
+            year={certification.year}
+            academy={certification.academy.name}
+            url={certification.url}
+            tags={certification.tags}
+            isMain={isMain}
+          />
         )
-      })}
-    </>
+      }}
+    </AsyncCollection>
   )
 }
 

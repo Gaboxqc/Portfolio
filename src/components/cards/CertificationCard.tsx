@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { PlatziIcon, LinkIcon, DateIcon, FilledStarIcon } from '../../assets/icons/index'
-import TextCardSlim from './TextCardSlim'
+import Badge from '../ui/Badge'
 import type { Tag } from '../../types'
 
 interface CertificationCardProps {
@@ -8,10 +8,8 @@ interface CertificationCardProps {
   academy: string
   year: number
   tags?: Tag[]
-  serial?: string
   url: string
   isMain?: boolean
-  animation?: string
 }
 
 const CertificationCard = ({
@@ -57,7 +55,7 @@ const CertificationCard = ({
           <ul className='my-2 flex max-w-xs flex-wrap gap-2'>
             {tags.map((t) => (
               <li key={t.name}>
-                <TextCardSlim Text={t.name} />
+                <Badge text={t.name} />
               </li>
             ))}
           </ul>
