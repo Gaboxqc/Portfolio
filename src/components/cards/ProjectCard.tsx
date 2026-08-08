@@ -69,7 +69,13 @@ const ProjectCard = ({
             </a>
           )}
         </div>
-        <img src={image} alt={title} className={'h-full w-full object-cover'} />
+        <img
+          src={image}
+          alt={title}
+          loading={'lazy'}
+          decoding={'async'}
+          className={'h-full w-full object-cover'}
+        />
       </div>
       <div className={'flex flex-col gap-4 bg-card p-4'}>
         <div className={'flex items-center gap-2'}>

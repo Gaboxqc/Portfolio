@@ -16,7 +16,6 @@ const useCourses = ({ categoryIds = [], tagIds = [], limit = 100 }: UseCoursesPa
     queryKey: ['courses', sortedCategoryIds, sortedTagIds, limit],
     queryFn: ({ signal }) =>
       getCourses({ categoryIds: sortedCategoryIds, tagIds: sortedTagIds, limit }, signal),
-    retry: 2,
     placeholderData: keepPreviousData,
   })
 

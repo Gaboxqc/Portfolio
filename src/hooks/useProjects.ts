@@ -47,7 +47,6 @@ const useProjects = ({
         signal,
       ),
     placeholderData: keepPreviousData,
-    retry: 2,
   })
 
   return { projects: data ?? [], loading: isLoading, error: error?.message ?? null }

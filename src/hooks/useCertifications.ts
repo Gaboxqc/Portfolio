@@ -12,7 +12,6 @@ const useCertifications = ({ isMain, offset = 0, limit = 100 }: UseCertification
   const { data, isLoading, error } = useQuery<Certification[], Error>({
     queryKey: ['certifications', isMain, offset, limit],
     queryFn: ({ signal }) => getCertifications({ isMain, offset, limit }, signal),
-    retry: 2,
   })
 
   return { certifications: data ?? [], loading: isLoading, error: error?.message ?? null }

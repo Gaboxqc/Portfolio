@@ -7,10 +7,17 @@ import useLanguage from '../hooks/useLanguage'
 import useFilters from '../hooks/useFilters'
 import useCourses from '../hooks/useCourses'
 import useToggleArray from '../hooks/useToggleArray'
+import useDocumentMeta from '../hooks/useDocumentMeta'
 import { AnimatePresence } from 'framer-motion'
 
 const CoursesPage = () => {
   const { translate } = useLanguage()
+
+  useDocumentMeta({
+    title: translate('course-section.title'),
+    description: translate('course-section.description'),
+    path: '/courses',
+  })
   const { options: categories } = useFilters('categories')
   const { options: tags } = useFilters('tags')
 

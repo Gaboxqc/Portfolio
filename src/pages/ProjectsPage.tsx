@@ -9,9 +9,16 @@ import useLanguage from '../hooks/useLanguage'
 import useFilters from '../hooks/useFilters'
 import useProjects from '../hooks/useProjects'
 import useToggleArray from '../hooks/useToggleArray'
+import useDocumentMeta from '../hooks/useDocumentMeta'
 
 const ProjectsPage = () => {
   const { translate } = useLanguage()
+
+  useDocumentMeta({
+    title: translate('project-section.title'),
+    description: translate('project-section.description'),
+    path: '/projects',
+  })
 
   const { options: projectTypes } = useFilters('project_types')
   const { options: difficultyLevels } = useFilters('difficulty_levels')
