@@ -1,7 +1,7 @@
 import ProjectCard from '../cards/ProjectCard'
+import AsyncCollection from '../ui/AsyncCollection'
 import useLanguage from '../../hooks/useLanguage'
 import getTranslation from '../../utils/getTranslation'
-import { motion } from 'framer-motion'
 import type { Project } from '../../types'
 
 interface ProjectsContainerProps {
@@ -15,59 +15,27 @@ function ProjectsContainer({
   loading = false,
   error = null,
 }: ProjectsContainerProps) {
-  const { locale, translate } = useLanguage()
-
-  if (loading)
-    return (
-      <>
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className='h-40 w-full animate-pulse rounded-xl bg-muted-foreground/10' />
-        ))}
-      </>
-    )
-
-  if (error)
-    return (
-      <p role='alert' className='col-span-full p-10 text-center text-red-500'>
-        {translate('state.error')}
-      </p>
-    )
-
-  if (!projects.length)
-    return (
-      <p className='col-span-full p-10 text-center text-muted-foreground'>
-        {translate('state.no-projects')}
-      </p>
-    )
+  const { locale } = useLanguage()
 
   return (
-    <>
-      {projects.map((project) => {
+    <AsyncCollection items={projects} loading={loading} error={error} emptyKey='state.no-projects'>
+      {(project) => {
         const translation = getTranslation(project.translations, locale)
         return (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring' }}
-            viewport={{ once: true }}
-            key={project.id}
-          >
-            <ProjectCard
-              key={project.id}
-              title={translation.title}
-              description={translation.description}
-              year={project.year}
-              difficulty={project.difficulty_level.name}
-              type={project.project_type.name}
-              tags={project.tags}
-              image={project.image_url}
-              gitUrl={project.git_url}
-              projectUrl={project.deploy_url}
-            />
-          </motion.div>
+          <ProjectCard
+            title={translation.title}
+            description={translation.description}
+            year={project.year}
+            difficulty={project.difficulty_level.name}
+            type={project.project_type.name}
+            tags={project.tags}
+            image={project.image_url}
+            gitUrl={project.git_url}
+            projectUrl={project.deploy_url}
+          />
         )
-      })}
-    </>
+      }}
+    </AsyncCollection>
   )
 }
 

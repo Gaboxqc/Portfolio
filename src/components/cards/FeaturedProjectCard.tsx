@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import TextCardSlim from './TextCardSlim'
+import Badge from '../ui/Badge'
 import type { Tag } from '../../types'
 
 interface FeaturedProjectCardProps {
@@ -40,7 +40,7 @@ const FeaturedProjectCard = forwardRef<HTMLDivElement, FeaturedProjectCardProps>
           <p className='text-md leading-relaxed text-muted-foreground'>{description}</p>
           <div className='flex flex-wrap gap-2'>
             {tags.map((t) => (
-              <TextCardSlim key={t.id} Text={t.name} />
+              <Badge key={t.id} text={t.name} />
             ))}
           </div>
         </div>

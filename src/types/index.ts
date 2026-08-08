@@ -32,7 +32,8 @@ export interface FilterOption {
   name: string
 }
 
-export interface Certification {
+/** Shared shape behind courses and certifications, which the API returns identically. */
+export interface Credential {
   id: number
   year: number
   url: string
@@ -41,14 +42,9 @@ export interface Certification {
   translations: Translation[]
 }
 
-export interface Course {
-  id: number
-  year: number
-  url: string
-  academy: Academy
-  tags: Tag[]
-  translations: Translation[]
-}
+export type Certification = Credential
+
+export type Course = Credential
 
 export interface Project {
   id: number

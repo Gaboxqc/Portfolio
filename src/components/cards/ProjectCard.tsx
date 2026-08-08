@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import TextCardSlim from './TextCardSlim'
+import Badge from '../ui/Badge'
 import { getDifficultyStyle } from '../../utils/difficultyLevelStyles'
 import { getProjectTypeStyle } from '../../utils/projectTypeStyles'
 import type { Tag } from '../../types'
@@ -92,7 +92,7 @@ const ProjectCard = ({
             {tags.map((tag) => {
               return (
                 <li key={tag.id}>
-                  <TextCardSlim Text={tag.name} />
+                  <Badge text={tag.name} />
                 </li>
               )
             })}

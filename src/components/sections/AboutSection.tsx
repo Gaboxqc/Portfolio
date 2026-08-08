@@ -1,6 +1,7 @@
 import SkillCard from '../cards/SkillCard'
-import TextCard from '../cards/TextCard'
+import Badge from '../ui/Badge'
 import useLanguage from '../../hooks/useLanguage'
+import { ArtIcon, CodeIcon, LightningIcon, RocketIcon } from '../../assets/icons/index'
 
 function AboutSection() {
   const { translate } = useLanguage()
@@ -22,36 +23,36 @@ function AboutSection() {
       </p>
       <div className={'grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}>
         <SkillCard
-          Icon={'Code'}
-          Title={translate('about.clean-code')}
-          Description={translate('about.clean-code-description')}
+          icon={CodeIcon}
+          title={translate('about.clean-code')}
+          description={translate('about.clean-code-description')}
         />
         <SkillCard
-          Icon={'Art'}
-          Title={translate('about.ai-interfaces')}
-          Description={translate('about.ai-interfaces-description')}
+          icon={ArtIcon}
+          title={translate('about.ai-interfaces')}
+          description={translate('about.ai-interfaces-description')}
         />
         <SkillCard
-          Icon={'Rocket'}
-          Title={translate('about.high-performance')}
-          Description={translate('about.high-performance-description')}
+          icon={RocketIcon}
+          title={translate('about.high-performance')}
+          description={translate('about.high-performance-description')}
         />
         <SkillCard
-          Icon={'Lightning'}
-          Title={translate('about.fast-delivery')}
-          Description={translate('about.fast-delivery-description')}
+          icon={LightningIcon}
+          title={translate('about.fast-delivery')}
+          description={translate('about.fast-delivery-description')}
         />
       </div>
       <h2 className={'my-10 text-2xl'}>{translate('about.second-title')}</h2>
       <div className='grid w-full grid-cols-2 gap-3 gap-y-6 md:grid-cols-3 lg:grid-cols-4'>
-        <TextCard text={'HTML'} />
-        <TextCard text={'CSS'} />
-        <TextCard text={'JavaScript'} />
-        <TextCard text={'Python'} />
-        <TextCard text={'React'} />
-        <TextCard text={'FastAPI'} />
-        <TextCard text={'PostgreSQL'} />
-        <TextCard text={'Figma'} />
+        <Badge variant='tile' text={'HTML'} />
+        <Badge variant='tile' text={'CSS'} />
+        <Badge variant='tile' text={'JavaScript'} />
+        <Badge variant='tile' text={'Python'} />
+        <Badge variant='tile' text={'React'} />
+        <Badge variant='tile' text={'FastAPI'} />
+        <Badge variant='tile' text={'PostgreSQL'} />
+        <Badge variant='tile' text={'Figma'} />
       </div>
     </section>
   )

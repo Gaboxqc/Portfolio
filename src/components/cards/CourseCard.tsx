@@ -1,5 +1,5 @@
 import { PlatziIcon, LinkIcon, DateIcon } from '../../assets/icons/index'
-import TextCardSlim from './TextCardSlim'
+import Badge from '../ui/Badge'
 import type { Tag } from '../../types'
 
 interface CourseCardProps {
@@ -30,7 +30,7 @@ const CourseCard = ({ title, academy, year, tags = [], url }: CourseCardProps) =
           <ul className='my-2 flex max-w-xs flex-wrap gap-2'>
             {tags.map((t) => (
               <li key={t.name}>
-                <TextCardSlim Text={t.name} />
+                <Badge text={t.name} />
               </li>
             ))}
           </ul>

@@ -2,9 +2,11 @@ import { ArrowIcon } from '../../assets/icons/index'
 import { Link } from 'react-router'
 import CertificationsContainer from '../containers/CertificationsContainer'
 import useLanguage from '../../hooks/useLanguage'
+import useCertifications from '../../hooks/useCertifications'
 
 function CertificationsSection() {
   const { translate } = useLanguage()
+  const { certifications, loading, error } = useCertifications({ limit: 4 })
   return (
     <section
       id={'certifications'}
@@ -31,7 +33,11 @@ function CertificationsSection() {
           </Link>
         </div>
         <div className={'my-20 grid w-full grid-cols-1 gap-12 px-4 md:grid-cols-2'}>
-          <CertificationsContainer limit={4} animation={'tilt'} />
+          <CertificationsContainer
+            certifications={certifications}
+            loading={loading}
+            error={error}
+          />
         </div>
         <Link
           to={'/courses'}

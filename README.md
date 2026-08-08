@@ -41,17 +41,21 @@ npm run dev
 That opens at `http://localhost:5173`. You'll also want a `.env` file:
 
 ```env
-VITE_API_BASE_URL=https://your-api-url.vercel.app
+VITE_API_URL=https://your-api-url.vercel.app/portfolio
 ```
+
+There's a `.env.example` in the repo you can copy.
 
 You can point that at the live API if you don't want to run the backend locally — all the read endpoints are public.
 
 Other scripts you might want:
 
 ```bash
-npm run build    # production build → /dist
-npm run preview  # serve the production build locally
-npm run lint     # ESLint
+npm run build        # production build → /dist
+npm run preview      # serve the production build locally
+npm run lint         # ESLint
+npm run test         # Vitest
+npm run format       # Prettier
 ```
 
 ---
@@ -61,33 +65,33 @@ npm run lint     # ESLint
 ```
 src/
 ├── components/
-│   ├── cards/      # ProjectCard, CertificationCard, SkillCard, etc.
-│   ├── sections/   # CoursesContainer, CertificationsContainer, NavbarSections
-│   └── ui/         # GradientButton, FilterGroup, TypewriterLoop, LanguageSelector
+│   ├── cards/          # ProjectCard, CertificationCard, CourseCard, SkillCard
+│   ├── containers/     # map API collections onto cards
+│   ├── sections/       # HomePage sections + NavbarSections
+│   └── ui/             # Badge, AsyncCollection, FilterGroup, GradientButton, …
+├── context/
+│   └── LanguageContext.tsx    # locale state, persistence, translate()
 ├── hooks/
-│   ├── useFilters.ts          # filter state logic
-│   ├── useLanguage.ts         # i18n context and translation helper
+│   ├── useProjects.ts / useCourses.ts / useCertifications.ts   # data
+│   ├── useFilters.ts          # filter option lookups
+│   ├── useDocumentMeta.ts     # per-route title, canonical, OG tags
+│   ├── useToggleArray.ts      # multi-select filter state
+│   ├── useLanguage.ts         # LanguageContext accessor
 │   ├── useScrollRestoration.ts
 │   └── useTilt.ts             # card tilt effect on hover
-├── locales/
-│   ├── en.json
-│   ├── es.json
-│   └── de.json
-├── pages/
-│   ├── HomePage.tsx
-│   ├── ProjectsPage.tsx
-│   └── CoursesPage.tsx
-├── styles/
-│   ├── index.css
-│   └── theme.css
-├── types/
-│   └── index.ts        # shared domain types (Project, Certification, Course, etc.)
-├── utils/
-│   └── getTranslation.ts
-├── App.tsx
-├── Layout.tsx
+├── locales/            # en.json, es.json, de.json (key parity is tested)
+├── pages/              # HomePage, ProjectsPage, CoursesPage, NotFound, Error
+├── services/           # axios instance + one module per endpoint
+├── styles/             # index.css, theme.css
+├── test/               # Vitest setup
+├── types/              # shared domain types (Project, Credential, …)
+├── utils/              # getTranslation, style helpers
+├── App.tsx             # router, QueryClient, background glows
+├── Layout.tsx          # navbar/footer shell + Suspense boundary
 └── main.tsx
 ```
+
+Tests live next to what they cover, as `*.test.ts(x)`.
 
 ---
 
@@ -97,7 +101,7 @@ The projects, courses, and certifications are all stored in a PostgreSQL databas
 
 👉 [github.com/Gaboxqc/GaboxAPI](https://github.com/Gaboxqc/GaboxAPI)
 
-The frontend uses TanStack Query + a custom `useFetch` hook to pull from it. Read endpoints are open, write endpoints need an API key.
+The frontend pulls from it with TanStack Query through the hooks in `src/hooks/`. Read endpoints are open, write endpoints need an API key.
 
 ---
 
