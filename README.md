@@ -118,7 +118,11 @@ Two things worth knowing:
 
 ## Security headers
 
-`vercel.json` sets a CSP plus `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` and HSTS. Two deliberate loosenings:
+`vercel.json` sets a CSP plus `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` and HSTS.
+
+**The CSP is currently `Content-Security-Policy-Report-Only`.** Enforcing it broke the deployed site: this domain is proxied through Cloudflare, which injects its own analytics beacon and inline scripts that the policy did not allow. Report-only reports every violation to the console and blocks nothing, so a missed origin cannot take the site down. Rename the header back to `Content-Security-Policy` once the browser console is clean — and note that Cloudflare's inline scripts will need either `'unsafe-inline'`, their sha256 hashes, or Cloudflare's injections turned off.
+
+Two deliberate loosenings:
 
 - `style-src` allows `'unsafe-inline'`, because Framer Motion animates through inline style attributes.
 - `img-src` allows any `https:` origin, because project images and academy logos are arbitrary URLs pasted into the dashboard. Narrowing it to one asset host would reject a legitimate logo.
