@@ -33,7 +33,7 @@ function CertificationsContainer({
           <CertificationCard
             title={translation.title}
             year={certification.year}
-            academy={certification.academy.name}
+            academy={certification.academy?.name ?? ''}
             url={certification.url}
             tags={certification.tags}
             isMain={isMain}

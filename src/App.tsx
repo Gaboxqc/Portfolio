@@ -21,6 +21,12 @@ const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'))
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'))
 const AdminOverviewPage = lazy(() => import('./pages/admin/AdminOverviewPage'))
 const RequireAdmin = lazy(() => import('./components/admin/RequireAdmin'))
+const AdminProjectsPage = lazy(() => import('./pages/admin/AdminProjectsPage'))
+const AdminCoursesPage = lazy(() => import('./pages/admin/AdminCoursesPage'))
+const AdminCertificationsPage = lazy(() => import('./pages/admin/AdminCertificationsPage'))
+const AdminLookupsPage = lazy(() => import('./pages/admin/AdminLookupsPage'))
+const ProjectFormPage = lazy(() => import('./pages/admin/ProjectFormPage'))
+const CredentialFormPage = lazy(() => import('./pages/admin/CredentialFormPage'))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,7 +66,21 @@ const router = createBrowserRouter([
         children: [
           {
             element: <AdminLayout />,
-            children: [{ index: true, element: <AdminOverviewPage /> }],
+            children: [
+              { index: true, element: <AdminOverviewPage /> },
+              { path: 'projects', element: <AdminProjectsPage /> },
+              // ':id' is 'new' for a create, or a numeric id for an edit, so one
+              // component covers both and cannot drift between them.
+              { path: 'projects/:id', element: <ProjectFormPage /> },
+              { path: 'courses', element: <AdminCoursesPage /> },
+              { path: 'courses/:id', element: <CredentialFormPage kind='course' /> },
+              { path: 'certifications', element: <AdminCertificationsPage /> },
+              {
+                path: 'certifications/:id',
+                element: <CredentialFormPage kind='certification' />,
+              },
+              { path: 'lookups', element: <AdminLookupsPage /> },
+            ],
           },
         ],
       },
