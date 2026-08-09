@@ -17,6 +17,7 @@ export interface Tag {
 export interface Academy {
   id?: number
   name: string
+  image_url?: string | null
 }
 
 export interface Category {

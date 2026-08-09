@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
+import AcademyLogo from '../../components/ui/AcademyLogo'
 import ConfirmDialog from '../../components/admin/ConfirmDialog'
 import { useAdminList, useAdminMutations } from '../../hooks/admin/useAdminResource'
 import useNoIndex from '../../hooks/useNoIndex'
@@ -10,11 +11,20 @@ import type { FilterOption } from '../../types'
 
 interface LookupWrite {
   name: string
+  /** Academies only; the other tables reject unknown fields. */
+  image_url?: string | null
+}
+
+/** An academy row carries a logo alongside its name. */
+interface LookupRow extends FilterOption {
+  image_url?: string | null
 }
 
 const TABLES = [
   { key: 'tags', label: 'Tags', path: ADMIN_PATHS.tags },
-  { key: 'academies', label: 'Academies', path: ADMIN_PATHS.academies },
+  // Academies are the one lookup that is not just a name: their logo is shown
+  // beside every course and certification from that academy.
+  { key: 'academies', label: 'Academies', path: ADMIN_PATHS.academies, withLogo: true },
   { key: 'categories', label: 'Categories', path: ADMIN_PATHS.categories },
   { key: 'projectTypes', label: 'Project types', path: ADMIN_PATHS.projectTypes },
   { key: 'difficultyLevels', label: 'Difficulty levels', path: ADMIN_PATHS.difficultyLevels },
@@ -26,21 +36,39 @@ const TABLES = [
  * These are `id + name` rows, so a dedicated form screen per record would be
  * more clicks than content. Everything happens in place.
  */
-const LookupTable = ({ label, path }: { label: string; path: string }) => {
+const LookupTable = ({
+  label,
+  path,
+  withLogo = false,
+}: {
+  label: string
+  path: string
+  withLogo?: boolean
+}) => {
   const queryClient = useQueryClient()
-  const { items, loading, error } = useAdminList<FilterOption>(path, 0, 100)
-  const { create, update, remove } = useAdminMutations<FilterOption, LookupWrite>(path)
+  const { items, loading, error } = useAdminList<LookupRow>(path, 0, 100)
+  const { create, update, remove } = useAdminMutations<LookupRow, LookupWrite>(path)
 
   const [newName, setNewName] = useState('')
+  const [newLogo, setNewLogo] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editingName, setEditingName] = useState('')
-  const [pendingDelete, setPendingDelete] = useState<FilterOption | null>(null)
+  const [editingLogo, setEditingLogo] = useState('')
+  const [pendingDelete, setPendingDelete] = useState<LookupRow | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
 
   // Dropdowns elsewhere read these through a different query key, so they need
   // refreshing too or a newly added tag will not appear in a form until reload.
   const refreshOptions = () =>
     queryClient.invalidateQueries({ queryKey: ['admin', path, 'options'] })
+
+  // Sending image_url to a name-only table would be rejected, so it is only
+  // included where it exists. An empty box clears the logo rather than skipping
+  // it, which is how the user removes one.
+  const payloadFor = (name: string, logo: string): LookupWrite => ({
+    name: name.trim(),
+    ...(withLogo ? { image_url: logo.trim() === '' ? null : logo.trim() } : {}),
+  })
 
   const runAction = async (action: () => Promise<unknown>, fallback: string) => {
     setActionError(null)
@@ -58,17 +86,20 @@ const LookupTable = ({ label, path }: { label: string; path: string }) => {
     event.preventDefault()
     if (newName.trim() === '') return
     const ok = await runAction(
-      () => create.mutateAsync({ name: newName.trim() }),
+      () => create.mutateAsync(payloadFor(newName, newLogo)),
       `Could not add this ${label.toLowerCase()} entry.`,
     )
-    if (ok) setNewName('')
+    if (ok) {
+      setNewName('')
+      setNewLogo('')
+    }
   }
 
   const handleRename = async (id: number) => {
     if (editingName.trim() === '') return
     const ok = await runAction(
-      () => update.mutateAsync({ id, payload: { name: editingName.trim() } }),
-      'Could not rename this entry.',
+      () => update.mutateAsync({ id, payload: payloadFor(editingName, editingLogo) }),
+      'Could not save this entry.',
     )
     if (ok) setEditingId(null)
   }
@@ -107,38 +138,52 @@ const LookupTable = ({ label, path }: { label: string; path: string }) => {
       ) : (
         <ul className='flex flex-col gap-2'>
           {items.map((item) => (
-            <li key={item.id} className='flex items-center gap-2'>
+            <li key={item.id} className='flex flex-col gap-2'>
               {editingId === item.id ? (
                 <>
-                  <input
-                    value={editingName}
-                    onChange={(event) => setEditingName(event.target.value)}
-                    aria-label={`Rename ${item.name}`}
-                    className='h-9 flex-1 rounded-lg border border-primary/30 bg-background px-2 text-sm outline-none focus-visible:border-accent'
-                  />
-                  <button
-                    type='button'
-                    onClick={() => handleRename(item.id)}
-                    className='cursor-pointer rounded-lg bg-primary/20 px-3 py-1.5 text-sm hover:bg-primary/30'
-                  >
-                    Save
-                  </button>
-                  <button
-                    type='button'
-                    onClick={() => setEditingId(null)}
-                    className='cursor-pointer rounded-lg px-3 py-1.5 text-sm text-muted-foreground outline-1 hover:text-foreground'
-                  >
-                    Cancel
-                  </button>
+                  <div className='flex items-center gap-2'>
+                    <input
+                      value={editingName}
+                      onChange={(event) => setEditingName(event.target.value)}
+                      aria-label={`Rename ${item.name}`}
+                      className='h-9 flex-1 rounded-lg border border-primary/30 bg-background px-2 text-sm outline-none focus-visible:border-accent'
+                    />
+                    <button
+                      type='button'
+                      onClick={() => handleRename(item.id)}
+                      className='cursor-pointer rounded-lg bg-primary/20 px-3 py-1.5 text-sm hover:bg-primary/30'
+                    >
+                      Save
+                    </button>
+                    <button
+                      type='button'
+                      onClick={() => setEditingId(null)}
+                      className='cursor-pointer rounded-lg px-3 py-1.5 text-sm text-muted-foreground outline-1 hover:text-foreground'
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  {withLogo && (
+                    <input
+                      type='url'
+                      value={editingLogo}
+                      onChange={(event) => setEditingLogo(event.target.value)}
+                      placeholder='Logo URL (leave empty for none)'
+                      aria-label={`Logo URL for ${item.name}`}
+                      className='h-9 rounded-lg border border-primary/30 bg-background px-2 text-sm outline-none focus-visible:border-accent'
+                    />
+                  )}
                 </>
               ) : (
-                <>
+                <div className='flex items-center gap-2'>
+                  {withLogo && <AcademyLogo name={item.name} imageUrl={item.image_url} />}
                   <span className='flex-1 text-sm'>{item.name}</span>
                   <button
                     type='button'
                     onClick={() => {
                       setEditingId(item.id)
                       setEditingName(item.name)
+                      setEditingLogo(item.image_url ?? '')
                       setActionError(null)
                     }}
                     className='cursor-pointer rounded-lg px-3 py-1.5 text-sm outline-1 hover:bg-primary/10'
@@ -155,28 +200,40 @@ const LookupTable = ({ label, path }: { label: string; path: string }) => {
                   >
                     Delete
                   </button>
-                </>
+                </div>
               )}
             </li>
           ))}
         </ul>
       )}
 
-      <form onSubmit={handleAdd} className='flex gap-2'>
-        <input
-          value={newName}
-          onChange={(event) => setNewName(event.target.value)}
-          placeholder={`Add a new ${label.toLowerCase().replace(/s$/, '')}`}
-          aria-label={`New ${label} entry`}
-          className='h-10 flex-1 rounded-lg border border-primary/30 bg-background px-3 text-sm outline-none focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent'
-        />
-        <button
-          type='submit'
-          disabled={newName.trim() === '' || create.isPending}
-          className='cursor-pointer rounded-lg bg-primary/20 px-4 py-2 text-sm hover:bg-primary/30 disabled:cursor-not-allowed disabled:opacity-50'
-        >
-          Add
-        </button>
+      <form onSubmit={handleAdd} className='flex flex-col gap-2'>
+        <div className='flex gap-2'>
+          <input
+            value={newName}
+            onChange={(event) => setNewName(event.target.value)}
+            placeholder={`Add a new ${label.toLowerCase().replace(/s$/, '')}`}
+            aria-label={`New ${label} entry`}
+            className='h-10 flex-1 rounded-lg border border-primary/30 bg-background px-3 text-sm outline-none focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent'
+          />
+          <button
+            type='submit'
+            disabled={newName.trim() === '' || create.isPending}
+            className='cursor-pointer rounded-lg bg-primary/20 px-4 py-2 text-sm hover:bg-primary/30 disabled:cursor-not-allowed disabled:opacity-50'
+          >
+            Add
+          </button>
+        </div>
+        {withLogo && (
+          <input
+            type='url'
+            value={newLogo}
+            onChange={(event) => setNewLogo(event.target.value)}
+            placeholder='Logo URL (optional)'
+            aria-label={`New ${label} logo URL`}
+            className='h-10 rounded-lg border border-primary/30 bg-background px-3 text-sm outline-none focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent'
+          />
+        )}
       </form>
 
       <ConfirmDialog
@@ -205,7 +262,12 @@ const AdminLookupsPage = () => {
 
       <div className='grid gap-6 lg:grid-cols-2'>
         {TABLES.map((table) => (
-          <LookupTable key={table.key} label={table.label} path={table.path} />
+          <LookupTable
+            key={table.key}
+            label={table.label}
+            path={table.path}
+            withLogo={'withLogo' in table && table.withLogo}
+          />
         ))}
       </div>
     </div>

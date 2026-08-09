@@ -22,6 +22,7 @@ function CoursesContainer({ courses = [], loading = false, error = null }: Cours
             title={translation.title}
             year={course.year}
             academy={course.academy?.name ?? ''}
+            academyImage={course.academy?.image_url}
             url={course.url}
             tags={course.tags}
           />
