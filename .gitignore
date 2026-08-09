@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .env
+
+# Local Claude Code config (dev server definitions, local settings)
+.claude/

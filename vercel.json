@@ -23,7 +23,6 @@
   ],
   "headers": [
     {
-      "//": "Excludes /gameradar and /statpitch: those rewrites proxy separate apps through this domain, and imposing this site's CSP on their responses would break their own scripts and styles.",
       "source": "/((?!gameradar|statpitch).*)",
       "headers": [
         {
@@ -49,7 +48,6 @@
       ]
     },
     {
-      "//": "The dashboard has nothing to index. robots.txt asks crawlers not to fetch it, but a disallowed URL can still be indexed if something links to it; this header is what actually keeps it out of results.",
       "source": "/admin/:path*",
       "headers": [
         {
