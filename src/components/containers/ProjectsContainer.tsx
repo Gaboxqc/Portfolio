@@ -24,10 +24,10 @@ function ProjectsContainer({
         return (
           <ProjectCard
             title={translation.title}
-            description={translation.description}
+            description={translation.description ?? ''}
             year={project.year}
-            difficulty={project.difficulty_level.name}
-            type={project.project_type.name}
+            difficulty={project.difficulty_level?.name ?? ''}
+            type={project.project_type?.name ?? ''}
             tags={project.tags}
             image={project.image_url}
             gitUrl={project.git_url}

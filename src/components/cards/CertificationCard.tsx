@@ -8,7 +8,7 @@ interface CertificationCardProps {
   academy: string
   year: number
   tags?: Tag[]
-  url: string
+  url: string | null
   isMain?: boolean
 }
 
@@ -59,15 +59,18 @@ const CertificationCard = ({
               </li>
             ))}
           </ul>
-          <a
-            className='self-start'
-            href={url}
-            target='_blank'
-            rel='noopener noreferrer'
-            aria-label={title}
-          >
-            <LinkIcon className='text-muted-foreground' />
-          </a>
+          {/* No certificate URL means no link, rather than a dead anchor. */}
+          {url && (
+            <a
+              className='self-start'
+              href={url}
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={title}
+            >
+              <LinkIcon className='text-muted-foreground' />
+            </a>
+          )}
         </div>
       </div>
     </motion.div>

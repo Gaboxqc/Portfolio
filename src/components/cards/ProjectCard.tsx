@@ -12,9 +12,9 @@ interface ProjectCardProps {
   difficulty: string
   tags?: Tag[]
   type: string
-  image: string
-  gitUrl?: string
-  projectUrl?: string
+  image: string | null
+  gitUrl?: string | null
+  projectUrl?: string | null
 }
 
 const ProjectCard = ({
@@ -69,13 +69,15 @@ const ProjectCard = ({
             </a>
           )}
         </div>
-        <img
-          src={image}
-          alt={title}
-          loading={'lazy'}
-          decoding={'async'}
-          className={'h-full w-full object-cover'}
-        />
+        {image && (
+          <img
+            src={image}
+            alt={title}
+            loading={'lazy'}
+            decoding={'async'}
+            className={'h-full w-full object-cover'}
+          />
+        )}
       </div>
       <div className={'flex flex-col gap-4 bg-card p-4'}>
         <div className={'flex items-center gap-2'}>

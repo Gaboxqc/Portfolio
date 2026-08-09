@@ -77,7 +77,7 @@ export default function FeaturedProjectsSection() {
                   position={index + 1}
                   year={project.year}
                   title={translation.title}
-                  description={translation.description}
+                  description={translation.description ?? ''}
                   tags={project.tags}
                   isActive={activeIndex === index}
                 />
@@ -87,9 +87,9 @@ export default function FeaturedProjectsSection() {
 
           <div className='hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:justify-center'>
             <div className='aspect-video w-full overflow-hidden rounded-2xl'>
-              {projects[activeIndex] && (
+              {projects[activeIndex]?.image_url && (
                 <img
-                  src={projects[activeIndex].image_url}
+                  src={projects[activeIndex].image_url as string}
                   alt={getTranslation(projects[activeIndex].translations, locale).title}
                   loading='lazy'
                   decoding='async'

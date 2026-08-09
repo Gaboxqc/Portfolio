@@ -5,7 +5,8 @@ export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
 export interface Translation {
   language_code: string
   title: string
-  description: string
+  /** Absent on course and certification translations, which carry only a title. */
+  description?: string
 }
 
 export interface Tag {
@@ -14,6 +15,12 @@ export interface Tag {
 }
 
 export interface Academy {
+  id?: number
+  name: string
+}
+
+export interface Category {
+  id?: number
   name: string
 }
 
@@ -32,12 +39,20 @@ export interface FilterOption {
   name: string
 }
 
+export interface Language {
+  code: string
+  name: string
+}
+
 /** Shared shape behind courses and certifications, which the API returns identically. */
 export interface Credential {
   id: number
   year: number
-  url: string
-  academy: Academy
+  is_main: boolean
+  url: string | null
+  validation_serial?: string | null
+  academy: Academy | null
+  category: Category | null
   tags: Tag[]
   translations: Translation[]
 }
@@ -49,11 +64,18 @@ export type Course = Credential
 export interface Project {
   id: number
   year: number
-  image_url: string
-  git_url: string
-  deploy_url: string
-  difficulty_level: DifficultyLevel
-  project_type: ProjectType
+  is_main: boolean
+  image_url: string | null
+  git_url: string | null
+  deploy_url: string | null
+  difficulty_level: DifficultyLevel | null
+  project_type: ProjectType | null
   tags: Tag[]
   translations: Translation[]
+}
+
+/** One page of a list endpoint, with the unpaginated total from X-Total-Count. */
+export interface Page<T> {
+  items: T[]
+  total: number
 }

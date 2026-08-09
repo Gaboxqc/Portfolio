@@ -7,7 +7,7 @@ interface CourseCardProps {
   academy: string
   year: number
   tags?: Tag[]
-  url: string
+  url: string | null
 }
 
 const CourseCard = ({ title, academy, year, tags = [], url }: CourseCardProps) => {
@@ -34,15 +34,18 @@ const CourseCard = ({ title, academy, year, tags = [], url }: CourseCardProps) =
               </li>
             ))}
           </ul>
-          <a
-            className='self-start'
-            href={url}
-            target='_blank'
-            rel='noopener noreferrer'
-            aria-label={title}
-          >
-            <LinkIcon className='text-muted-foreground' />
-          </a>
+          {/* No course URL means no link, rather than a dead anchor. */}
+          {url && (
+            <a
+              className='self-start'
+              href={url}
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={title}
+            >
+              <LinkIcon className='text-muted-foreground' />
+            </a>
+          )}
         </div>
       </div>
     </div>

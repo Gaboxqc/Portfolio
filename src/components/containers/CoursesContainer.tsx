@@ -21,7 +21,7 @@ function CoursesContainer({ courses = [], loading = false, error = null }: Cours
           <CourseCard
             title={translation.title}
             year={course.year}
-            academy={course.academy.name}
+            academy={course.academy?.name ?? ''}
             url={course.url}
             tags={course.tags}
           />
