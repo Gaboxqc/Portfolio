@@ -78,7 +78,9 @@ const CoursesPage = () => {
         </AnimatePresence>
       </section>
 
-      {!hasActiveFilters && (
+      {/* Hidden entirely when nothing is flagged featured — a heading above an
+          empty state reads as a broken page rather than an empty one. */}
+      {!hasActiveFilters && (loadingCertifications || mainCertifications.length > 0) && (
         <section className='flex flex-col gap-8'>
           <h3 className='text-2xl'>{translate('course-section.main_certification')}</h3>
           <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>

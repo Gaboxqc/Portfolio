@@ -34,6 +34,7 @@ function CertificationsContainer({
             title={translation.title}
             year={certification.year}
             academy={certification.academy?.name ?? ''}
+            academyImage={certification.academy?.image_url}
             url={certification.url}
             tags={certification.tags}
             isMain={isMain}

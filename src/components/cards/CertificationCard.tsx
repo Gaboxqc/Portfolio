@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion'
-import { PlatziIcon, LinkIcon, DateIcon, FilledStarIcon } from '../../assets/icons/index'
+import { LinkIcon, DateIcon, FilledStarIcon } from '../../assets/icons/index'
+import AcademyLogo from '../ui/AcademyLogo'
 import Badge from '../ui/Badge'
 import type { Tag } from '../../types'
 
 interface CertificationCardProps {
   title: string
   academy: string
+  academyImage?: string | null
   year: number
   tags?: Tag[]
   url: string | null
@@ -15,6 +17,7 @@ interface CertificationCardProps {
 const CertificationCard = ({
   title,
   academy,
+  academyImage,
   year,
   tags = [],
   url,
@@ -34,12 +37,10 @@ const CertificationCard = ({
       }`}
     >
       <div className='flex h-16 justify-between'>
-        <motion.div
-          whileHover={{ scale: 1.15, rotate: 5 }}
-          transition={{ duration: 0.2 }}
-          className='flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 outline-1'
-        >
-          <PlatziIcon className='h-8 w-8' />
+        {/* The hover flourish stays on a wrapper so AcademyLogo owns only the
+            logo itself and both cards render it identically. */}
+        <motion.div whileHover={{ scale: 1.15, rotate: 5 }} transition={{ duration: 0.2 }}>
+          <AcademyLogo name={academy} imageUrl={academyImage} />
         </motion.div>
         {isMain && <FilledStarIcon className='text-accent' />}
       </div>

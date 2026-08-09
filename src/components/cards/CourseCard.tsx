@@ -1,23 +1,23 @@
-import { PlatziIcon, LinkIcon, DateIcon } from '../../assets/icons/index'
+import { LinkIcon, DateIcon } from '../../assets/icons/index'
+import AcademyLogo from '../ui/AcademyLogo'
 import Badge from '../ui/Badge'
 import type { Tag } from '../../types'
 
 interface CourseCardProps {
   title: string
   academy: string
+  academyImage?: string | null
   year: number
   tags?: Tag[]
   url: string | null
 }
 
-const CourseCard = ({ title, academy, year, tags = [], url }: CourseCardProps) => {
+const CourseCard = ({ title, academy, academyImage, year, tags = [], url }: CourseCardProps) => {
   return (
     <div className='group relative flex flex-col gap-4 overflow-hidden rounded-xl border border-primary/20 bg-card p-5'>
       <div className='pointer-events-none absolute top-0 right-0 z-0 h-12 w-12 translate-x-1/2 -translate-y-1/2 scale-0 rounded-full bg-primary/10 transition-transform duration-500 ease-out group-hover:scale-[25]' />
 
-      <div className='relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 outline-1'>
-        <PlatziIcon className='h-8 w-8' />
-      </div>
+      <AcademyLogo name={academy} imageUrl={academyImage} />
 
       <div className='flex flex-col gap-4'>
         <h3 className='font-normal'>{title}</h3>
