@@ -95,6 +95,38 @@ Tests live next to what they cover, as `*.test.ts(x)`.
 
 ---
 
+## Admin dashboard
+
+`/admin` is a password-protected dashboard for editing everything the site shows: projects, courses, certifications, their per-language translations and tag links, plus the lookup tables behind them (tags, academies, categories, project types, difficulty levels).
+
+It is lazy-loaded, so a normal visitor downloads none of it and makes no auth requests. Pages send `noindex` and `robots.txt` disallows `/admin`.
+
+Sign-in is a session cookie issued by the API — argon2id password hashing, opaque server-side sessions, CSRF on every write, and lockout after repeated failures. The API's README covers the design. There is no signup: the account is created once from the command line in the API repo.
+
+```bash
+# in the GaboxAPI repo
+alembic upgrade head
+python -m scripts.create_admin
+```
+
+Two things worth knowing:
+
+- **Use `localhost`, not `127.0.0.1`, in `VITE_API_URL`.** The session cookie is `SameSite=Lax`, and a browser treats `localhost:5173` and `127.0.0.1:8000` as different sites — so the cookie is never sent and you get a login that appears to work but is signed out on the next reload. Production is unaffected: `gabrielmayorga.dev` and `api.gabrielmayorga.dev` share a registrable domain.
+- **A certification only appears in "Main certifications" once it is marked featured** in the dashboard. The section is hidden entirely when nothing is.
+
+---
+
+## Security headers
+
+`vercel.json` sets a CSP plus `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` and HSTS. Two deliberate loosenings:
+
+- `style-src` allows `'unsafe-inline'`, because Framer Motion animates through inline style attributes.
+- `img-src` allows any `https:` origin, because project images and academy logos are arbitrary URLs pasted into the dashboard. Narrowing it to one asset host would reject a legitimate logo.
+
+The headers skip `/gameradar` and `/statpitch`: those rewrites proxy separate apps through this domain, and applying this site's CSP to their responses would break them.
+
+---
+
 ## Where the data comes from
 
 The projects, courses, and certifications are all stored in a PostgreSQL database and exposed through a FastAPI backend I wrote. It lives in its own repo:
